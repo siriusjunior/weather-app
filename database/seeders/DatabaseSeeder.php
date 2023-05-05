@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,11 +15,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        // 外部キー制約のチェックを無効
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0;');
+        \App\Models\Like::truncate();
+        \App\Models\User::truncate();
+        \App\Models\Prefecture::truncate();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        // 外部キー制約のチェックを再度有効
+        DB::statement('SET FOREIGN_KEY_CHECKS = 1;');
+        $this->call([
+            PrefectureSeeder::class,
+        ]);
     }
 }
