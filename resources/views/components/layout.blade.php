@@ -50,7 +50,7 @@
             </ul>
         </div>
         @endif
-        <main class="mt-3">
+        <main class="px-4 mt-3">
             {{ $slot }}
         </main>
     </div>

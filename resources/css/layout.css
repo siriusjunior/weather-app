@@ -1,0 +1,41 @@
+@charset "utf-8";
+
+.smooth {
+    -webkit-font-smoothing: antialiased;
+}
+.forcast__city {
+    display: inline-block;
+    -webkit-font-smoothing: antialiased;
+    width: 15%;
+}
+.forcast__weather {
+    display: inline-block;
+    -webkit-font-smoothing: antialiased;
+    width: 15%;
+}
+.forcast__temp {
+    display: inline-block;
+    -webkit-font-smoothing: antialiased;
+    width: 15%;
+}
+.forcast__city_mg {
+    margin-right: 10px;
+}
+/* デスクトップサイズ (1024px以上) */
+@media screen and (min-width: 1024px) {
+    .forcasts__wrapper{
+        max-width: 50%;;
+    }
+}
+/* タブレットサイズ (600px 〜 1023px) */
+@media screen and (max-width: 1023px) and (min-width: 600px) {
+    .forcasts__wrapper{
+        max-width: 80%;
+    }
+}
+/* スマートフォンサイズ (599px以下) */
+@media screen and (max-width: 599px) {
+    .forcasts__wrapper{
+        max-width: 100%;;
+    }
+}
