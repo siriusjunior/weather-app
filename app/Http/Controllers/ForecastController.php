@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\View\View;
 
-class ForecastsController extends Controller
+class ForecastController extends Controller
 {
     /**
      * 全国の天気予報を表示
