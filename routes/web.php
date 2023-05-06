@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\ForcastsController;
+use App\Http\Controllers\ForecastsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,7 +16,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 // トップページ表示
-Route::get('/', [ForcastsController::class, 'index'])->name('home.index');
+Route::get('/', [ForecastsController::class, 'index'])
+    ->name('home.index')
+    ->block($lockSeconds = 5, $waitSeconds = 5);
+
+//選択した都道府県の３時間ごとの天気を表示
+Route::get('/forecasts/{prefectureId}', [ForecastsController::class, 'show'])
+    ->name('forecasts.show')
+    ->block($lockSeconds = 5, $waitSeconds = 5);
+;
 
 Route::get('/dashboard', function () {
     return view('dashboard');

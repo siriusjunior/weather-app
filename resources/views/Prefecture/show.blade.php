@@ -1,6 +1,6 @@
-<x-layout title="TOP | 全国の天気">
+<x-layout title="{{ $name }}の3時間ごとの天気">
     <div class="d-flex align-items-center">
-        <h2 class="smooth mr-3">全国の天気</h2>
+        <h2 class="smooth mr-3">{{ $name }}の3時間ごとの天気</h2>
         <div>
             <i class="smooth d-block"> {{Carbon\Carbon::now()->isoFormat('M月DD日 H:mm') }}時点</i>
             <!-- <i class="d-block">都市名・予報・平均気温</i> -->
@@ -10,14 +10,12 @@
     @if(!empty($forecasts))
         <div class="forecasts__wrapper">
             <ul>
-                @foreach($forecasts as $name => $forecast)
+                @foreach($forecasts as $time => $forecast)
                     <li>
                         <div class="w-100">
-                            <a class="forecast__link" href="{{ route('forecasts.show', ['prefectureId' => $forecast['id'] ]) }}">
-                                <span class="forecast__city forecasts__city_mg">{{$name}}</span>
-                                <span class="forecast__weather">{{$forecast['weather']}}</span>
-                                <span class="forecast__temp">{{$forecast['temp']}}℃</span>
-                            </a>
+                            <span class="forecast__time forecasts__city_mg">{{$time}}</span>
+                            <span class="forecast__weather">{{$forecast['weather']}}</span>
+                            <span class="forecast__temp">{{$forecast['temp']}}℃</span>
                         </div>
                     </li>
                     <hr class="">
