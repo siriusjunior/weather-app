@@ -11,8 +11,8 @@
                                     <!-- 地域名 -->
                                     <div class="forecast__city">
                                         <span class="mr-2forecasts__city_mg">{{$name}}</span>
-                                        <i class="fa-md fa-sharp fa-solid fa-heart" style="color: #f91880;"></i>
-                                        <i class="fa-md fa-regular fa-heart" style="color: #f91880;"></i>
+                                        <i class="fa-lg mb-3 fa-heart fa-solid" style="color: #f91880;"></i><span class="count" style="color: #f91880;">３</span>
+                                        <i class="fa-lg mb-3 fa-heart fa-regular" style="color: #f91880;"></i><span class="count" style="color: #f91880;">３</span>
                                     </div>
                                     <!-- 天気アイコン -->
                                     @if($forecast['weather'] === '雨')

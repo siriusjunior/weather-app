@@ -26,9 +26,10 @@ services:
         - ENVNAME=${ENVNAME}
     volumes:
       - .:/app:delegated
-      - exclusion1:/app/vendor
-      - exclusion2:/app/storage
-      - exclusion3:/app/bootstrap/cache
+      # - exclusion1:/app/vendor
+      # - exclusion2:/app/storage
+      # - exclusion3:/app/bootstrap/cache
+      - ./logs:/app/storage/logs
     environment:
       DB_HOST: ${DB_HOST}
       MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}

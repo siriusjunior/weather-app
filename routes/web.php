@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ForecastController;
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -36,9 +37,8 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    // 認証ユーザーのいいねボタン切替え
+    Route::post('/likes/{prefectureId}', [LikeController::class, 'toggle'])->block($lockSeconds = 5, $waitSeconds = 5);;
 });
 
 

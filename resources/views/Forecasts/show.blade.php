@@ -1,7 +1,15 @@
-<x-layout title="{{ $name }}の3時間ごとの天気" h2="{{ $name }}の3時間ごとの天気">
+<x-layout title="{{ $area->name }}の3時間ごとの天気" h2="{{ $area->name }}の3時間ごとの天気">
 <hr class="my-0 mb-4" size="10" color="orange">
 @if(!empty($forecasts))
     <div class="forecasts__wrapper">
+        <div class="pl-3">
+        @if(Auth::user()->has_like($area->id))
+            <i class="like-btn fa-lg mb-3 fa-heart fa-solid" data-prefecture-id="{{ $area->id }}" style="color: #f91880;"></i>
+        @else
+            <i class="like-btn fa-lg mb-3 fa-heart fa-regular" data-prefecture-id="{{ $area->id }}" style="color: #f91880;"></i>
+        @endif
+            <span class="count" data-id="{{ $area->id }}" style="color: #f91880;">{{ $count }}</span>
+        </div>
         <ul>
             @foreach($forecasts as $time => $forecast)
                 <li>

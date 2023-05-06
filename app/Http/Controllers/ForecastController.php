@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Like;
 use App\Models\Prefecture;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
@@ -74,6 +75,7 @@ class ForecastController extends Controller
     {
         // トップ表示都市を取得
         $area = Prefecture::where('id', $prefectureId)->first();
+        $count = Like::where('prefecture_id', $area->id)->count();
         // キャッシュキー定義
         $cache_key = "detail_{$area->id}";
         // キャッシュ不在ならAPI取得・キャッシュ保存(有効期限を1時間(60分×60秒))
@@ -117,6 +119,6 @@ class ForecastController extends Controller
                 'weather' => $weather,
             ];
         }
-        return view('Forecasts/show', ['forecasts' => $forecasts, 'name' => $area->name]);
+        return view('Forecasts/show', ['forecasts' => $forecasts, 'area' => $area, 'count' => $count]);
     }
 }

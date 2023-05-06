@@ -3,6 +3,12 @@
 a:hover {
     text-decoration: none;
 }
+.like-btn:hover {
+    cursor: pointer;
+    -webkit-transform: translateY(-1.5px);
+    transform: translateY(-1.5px);
+    transition: .3s;
+}
 .smooth {
     -webkit-font-smoothing: antialiased;
 }
