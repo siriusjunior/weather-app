@@ -64,6 +64,8 @@ class PrefectureSeeder extends Seeder
                 ['name' => '秋田県', 'latitude' => '39.719', 'longitude' => '140.102', 'updated_at' => Carbon::now()->format('Y-m-d H:i:s'), 'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
                 ['name' => '青森県', 'latitude' => '40.824', 'longitude' => '140.740', 'updated_at' => Carbon::now()->format('Y-m-d H:i:s'), 'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
                 ['name' => '北海道', 'latitude' => '43.065', 'longitude' => '141.347', 'updated_at' => Carbon::now()->format('Y-m-d H:i:s'), 'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
+                // ['name' => '小笠原諸島', 'latitude' => '27.094', 'longitude' => '142.192', 'updated_at' => Carbon::now()->format('Y-m-d H:i:s'), 'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
+                // ['name' => '釧路', 'latitude' => '42.9848', 'longitude' => '144.3813', 'updated_at' => Carbon::now()->format('Y-m-d H:i:s'), 'created_at' => Carbon::now()->format('Y-m-d H:i:s')],
         ];
         DB::table('prefectures')->insert($prefectures);
     }
