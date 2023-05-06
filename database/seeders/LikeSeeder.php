@@ -2,7 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Prefecture;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class LikeSeeder extends Seeder
@@ -14,6 +15,12 @@ class LikeSeeder extends Seeder
      */
     public function run()
     {
-        //
+        $users = User::all();
+        $prefectures = Prefecture::all();
+        // foreach($users as $user){
+        //     [
+
+        //     ]
+        // }
     }
 }

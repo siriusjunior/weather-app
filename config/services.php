@@ -31,4 +31,8 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'open_weather' => [
+        'api_key' => env('OPEN_WEATHER_API_KEY'),
+    ],
+    //(ex) $apiKey = config('services.open_weather.api_key');
 ];
