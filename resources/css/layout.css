@@ -12,6 +12,13 @@ a:hover {
 .forecast__city_mg {
     margin-right: 10px;
 }
+.forecast__icon {
+    width: 50px;
+}
+.forecast__wrapper:hover {
+    background-color: #ecf5ff;
+    cursor: pointer;
+}
 /* デスクトップサイズ (1024px以上) */
 @media screen and (min-width: 1024px) {
     .forecasts__wrapper{

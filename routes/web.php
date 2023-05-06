@@ -15,6 +15,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// // ログインユーザーのみ
+// Route::middleware('auth')->group(function () {
+
+// }
+
 // トップページ表示
 Route::get('/', [ForecastController::class, 'index'])
     ->name('home.index')
