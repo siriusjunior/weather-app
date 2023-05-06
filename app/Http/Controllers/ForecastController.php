@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\View\View;
 
-class ForecastsController extends Controller
+class ForecastController extends Controller
 {
     /**
      * 全国の天気予報を表示
@@ -36,23 +36,27 @@ class ForecastsController extends Controller
                 $datetime = Carbon::createFromTimestamp($data['dt'], 'Asia/Tokyo');
                 //ケルビンから摂氏に変換
                 $temp = round($data['main']['temp'] - 273.15, 1);
-                if($data['weather'][0]['description'] === '曇りがち'){
-                    $weather = 'くもり';
-                }elseif($data['weather'][0]['description'] === '厚い雲'){
-                    $weather = 'くもり';
-                }elseif($data['weather'][0]['description'] === '弱いにわか雨'){
-                }elseif($data['weather'][0]['description'] === '適度な雨'){
-                    $weather = '雨';
-                }elseif($data['weather'][0]['description'] === '弱いにわか雨'){
-                    $weather = '小雨';
-                }elseif($data['weather'][0]['description'] === '晴天'){
-                    $weather = '晴れ';
-                }
+                $weatherMapping = [
+                    '曇りがち' => 'くもり',
+                    '厚い雲' => 'くもり',
+                    '薄い雲' => 'くもり',
+                    '霧' => 'くもり',
+                    '大雨' => '雨',
+                    '大雨' => '雨',
+                    '小雨' => '雨',
+                    '強い雨' => '雨',
+                    '弱いにわか雨' => '雨',
+                    'にわか雨' => '雨',
+                    '適度な雨' => '雨',
+                    '晴天' => '晴れ',
+                ];
+                $description = $data['weather'][0]['description'];
+                $weather = $weatherMapping[$description] ?? $description;
                 $forecasts[$area->name] = [
                     'id' => $area->id,
                     'time' => $datetime,
                     'temp' => $temp,
-                    'weather' => !is_null($weather) ? $weather : $data['weather'][0]['description'],
+                    'weather' => $weather,
                 ];
             }
         }else{
@@ -89,23 +93,28 @@ class ForecastsController extends Controller
             //ケルビンから摂氏に変換
             $temp = round($data['main']['temp'] - 273.15, 1);
             $weather = null;
-            if($data['weather'][0]['description'] === '曇りがち'){
-                $weather = 'くもり';
-            }elseif($data['weather'][0]['description'] === '厚い雲'){
-                $weather = 'くもり';
-            }elseif($data['weather'][0]['description'] === '弱いにわか雨'){
-            }elseif($data['weather'][0]['description'] === '適度な雨'){
-                $weather = '雨';
-            }elseif($data['weather'][0]['description'] === '弱いにわか雨'){
-                $weather = '小雨';
-            }elseif($data['weather'][0]['description'] === '晴天'){
-                $weather = '晴れ';
-            }
+            $weatherMapping = [
+                '曇りがち' => 'くもり',
+                '厚い雲' => 'くもり',
+                '薄い雲' => 'くもり',
+                '霧' => 'くもり',
+                '大雨' => '雨',
+                '大雨' => '雨',
+                '小雨' => '雨',
+                '強い雨' => '雨',
+                '弱いにわか雨' => '雨',
+                'にわか雨' => '雨',
+                '適度な雨' => '雨',
+                '晴天' => '晴れ',
+            ];
+            $description = $data['weather'][0]['description'];
+            // 配列内の書き換え
+            $weather = $weatherMapping[$description] ?? $description;
             $forecasts[$datetime] = [
                 'temp' => $temp,
-                'weather' => !is_null($weather) ? $weather : $data['weather'][0]['description'],
+                'weather' => $weather,
             ];
         }
-        return view('Prefecture/show', ['forecasts' => $forecasts, 'name' => $area->name]);
+        return view('Forecasts/show', ['forecasts' => $forecasts, 'name' => $area->name]);
     }
 }

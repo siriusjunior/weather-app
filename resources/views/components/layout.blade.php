@@ -51,6 +51,41 @@
         </div>
         @endif
         <main class="px-4 mt-3">
+            <div class="title__wrapper">
+                <div class="title__container">
+                    <h2 class="smooth">{{ $h2 ?? 'WeatherApp' }}</h2>
+                    <i class="smooth text-right"> {{Carbon\Carbon::now()->isoFormat('M月DD日 H:mm') }}時点</i>
+                </div>
+                <!-- <i class="d-block">都市名・予報・平均気温</i> -->
+                <div>
+                    @if(Auth::check())
+                        <div class="text-right">
+                            <span class="d-block">
+                                <a href="">{{ Auth::user()->name }}</a>
+                                さん
+                            </span>
+                            <form class="form-inline my-2 my-lg-0 d-block" method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <x-dropdown-link :href="route('logout')" onclick="event.preventDefault();
+                                                        this.closest('form').submit();">
+                                    {{ __('ログアウト') }}
+                                </x-dropdown-link>
+                            </form>
+                        </div>
+                    @else
+                        <div class="text-right">
+                            <span>
+                                <a href="{{route('login')}}">ログイン</a>
+                                するといいね登録ができます。
+                                <br>
+                                <!-- <a href="/">ゲストログイン</a>
+                                もできます。 -->
+                            </span>
+                        </div>
+                    @endif
+                </div>
+            </div>
+            <!-- ./title__wrapper -->
             {{ $slot }}
         </main>
     </div>

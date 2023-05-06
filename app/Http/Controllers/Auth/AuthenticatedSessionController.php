@@ -28,9 +28,19 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
-
-        return redirect()->intended(RouteServiceProvider::HOME);
+        // return redirect()->intended(RouteServiceProvider::HOME)->with('success', 'ログインしました。');
+        return redirect()->route('home.index')->with('success', 'ログインしました。');
     }
+
+    // public function guestLogin(LoginRequest $request): RedirectResponse
+    // {
+    //     $request->authenticate();
+
+    //     $request->session()->regenerate();
+
+    //     return redirect()->intended(RouteServiceProvider::HOME)->with('success', 'ログインしました。');
+    //     // return redirect()->route('home.index')->with('success', 'ログインしました。');
+    // }
 
     /**
      * Destroy an authenticated session.
@@ -43,6 +53,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('/')->with('success', 'ログアウトしました。');;
     }
 }
