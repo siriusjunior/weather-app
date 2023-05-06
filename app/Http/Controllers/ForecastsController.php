@@ -38,6 +38,9 @@ class ForecastsController extends Controller
                 $temp = round($data['main']['temp'] - 273.15, 1);
                 if($data['weather'][0]['description'] === '曇りがち'){
                     $weather = 'くもり';
+                }elseif($data['weather'][0]['description'] === '厚い雲'){
+                    $weather = 'くもり';
+                }elseif($data['weather'][0]['description'] === '弱いにわか雨'){
                 }elseif($data['weather'][0]['description'] === '適度な雨'){
                     $weather = '雨';
                 }elseif($data['weather'][0]['description'] === '弱いにわか雨'){
@@ -88,6 +91,9 @@ class ForecastsController extends Controller
             $weather = null;
             if($data['weather'][0]['description'] === '曇りがち'){
                 $weather = 'くもり';
+            }elseif($data['weather'][0]['description'] === '厚い雲'){
+                $weather = 'くもり';
+            }elseif($data['weather'][0]['description'] === '弱いにわか雨'){
             }elseif($data['weather'][0]['description'] === '適度な雨'){
                 $weather = '雨';
             }elseif($data['weather'][0]['description'] === '弱いにわか雨'){
