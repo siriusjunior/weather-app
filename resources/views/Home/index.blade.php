@@ -2,13 +2,26 @@
     <hr class="my-0 mb-4" size="10" color="orange">
     @if(!empty($forecasts))
         <div class="forecasts__wrapper">
-            <ul>
                 @foreach($forecasts as $name => $forecast)
-                    <a class="forecast__wrapper forecast__link d-block" href="{{ route('forecasts.show', ['prefectureId' => $forecast['id'] ]) }}">
-                        <li>
-                        <div class="w-100 py-3">
+                    <div class="pl-5 forcast top">
+                        <div class="top__heart_wrapper">
+                            <span class="heart-wrapper" data-prefecture-id="{{ $forecast['id'] }}">
+                                @if(Auth::check() && $forecast['authLiked'])
+                                    <i class="like-btn fa-lg fa-heart fa-solid" style="color: #f91880;"></i>
+                                @elseif(Auth::check() && !$forecast['authLiked'])
+                                    <i class="like-btn fa-lg fa-heart fa-regular" style="color: #f91880;"></i>
+                                @else
+                                    <i class="fa-lg fa-heart fa-regular" style="color: #f91880;"></i>
+                                @endif
+                            </span>
+                            <span class="count" data-id="{{ $forecast['id'] }}" style="color: #f91880;">{{ $forecast['likeCount'] }}</span>
+                        </div>
+                        <a class="top__forecast_wrapper forecast__link d-block" href="{{ route('forecasts.show', ['prefectureId' => $forecast['id'] ]) }}">
+                            <div class="w-100 py-3">
                                 <!-- 地域名 -->
-                                <span class="forecast__city forecasts__city_mg">{{$name}}</span>
+                                <div class="forecast__city">
+                                    <span class="mr-2 forecasts__city_mg">{{$name}}</span>
+                                </div>
                                 <!-- 天気アイコン -->
                                 @if($forecast['weather'] === '雨')
                                 <div class="forecast__icon forecast__weather">
@@ -22,15 +35,18 @@
                                     <div class="forecast__icon forecast__weather">
                                         <svg id="レイヤー_3" data-name="レイヤー 3" width="50" height="50" viewBox="0 0 200 200"><defs><style>.cls-1{fill:#f9b22a;}</style></defs><title>telop_100</title><path class="cls-1" d="M190,100,158.35,75.83l5.29-39.47-39.47,5.29L100,10,75.83,41.65,36.36,36.36l5.29,39.47L10,100l31.65,24.17-5.29,39.47,39.47-5.29L100,190l24.17-31.65,39.47,5.29-5.29-39.47Zm-90,62.31A62.31,62.31,0,1,1,162.31,100,62.38,62.38,0,0,1,100,162.31ZM150.1,100A50.1,50.1,0,1,1,100,49.9,50.1,50.1,0,0,1,150.1,100Z"/></svg>
                                     </div>
+                                @else
+                                    <div class="forecast__icon forecast__weather">
+                                        <span>{{$forecast['weather']}}</span>
+                                    </div>
                                 @endif
                                 <!-- 気温 -->
                                 <span class="forecast__temp">{{$forecast['temp']}}℃</span>
                             </div>
-                        </li>
+                        </a>
                         <hr class="my-0">
-                    </a>
+                    </div>
                 @endforeach
-            </ul>
         </div>
     @else
         <i>※天気予報を取得できません</i>

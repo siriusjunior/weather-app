@@ -46,4 +46,13 @@ class User extends Authenticatable
     {
         $this->hasMany(Like::class);
     }
+
+    public function has_like(string $prefecture_id): bool
+    {
+        if(Like::where('user_id', $this->id)->where('prefecture_id', $prefecture_id)->first()){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

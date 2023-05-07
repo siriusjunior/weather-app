@@ -9,11 +9,12 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/0722d56e11.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://kit.fontawesome.com/0722d56e11.js" crossorigin="anonymous"></script>
     <link rel="shortcut icon" href="{{ asset('/favicon.ico') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c&display=swap" rel="stylesheet">
-    @viteReactRefresh
     @vite('resources/css/layout.css')
     @vite('resources/js/app.js')
     <title>{{ $title ?? 'WeatherApp' }}</title>
@@ -53,11 +54,11 @@
         <main class="px-4 mt-3">
             <div class="title__wrapper">
                 <div class="title__container">
-                    <h2 class="smooth">{{ $h2 ?? 'WeatherApp' }}</h2>
-                    <i class="smooth text-right"> {{Carbon\Carbon::now()->isoFormat('M月DD日 H:mm') }}時点</i>
+                    <h2 class="title__main smooth">{{ $h2 ?? 'WeatherApp' }}</h2>
+                    <i class="title__time smooth"> {{Carbon\Carbon::now()->isoFormat('M月DD日 H:mm') }}時点</i>
                 </div>
                 <!-- <i class="d-block">都市名・予報・平均気温</i> -->
-                <div>
+                <div class="auth__container">
                     @if(Auth::check())
                         <div class="text-right">
                             <span class="d-block">
@@ -66,7 +67,7 @@
                             </span>
                             <form class="form-inline my-2 my-lg-0 d-block" method="POST" action="{{ route('logout') }}">
                                 @csrf
-                                <x-dropdown-link :href="route('logout')" onclick="event.preventDefault();
+                                <x-dropdown-link class="logout" :href="route('logout')" onclick="event.preventDefault();
                                                         this.closest('form').submit();">
                                     {{ __('ログアウト') }}
                                 </x-dropdown-link>
