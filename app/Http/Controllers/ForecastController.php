@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Like;
 use App\Models\Prefecture;
+use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\View\View;
@@ -15,20 +18,39 @@ class ForecastController extends Controller
      * 全国の天気予報を表示
      * @return view
      */
-    public function index()
+    public function index(): view
     {
         // トップ表示都市を取得
-        $topAreas = Prefecture::where('is_representative', 1)->get();
-        if(!is_null($topAreas)){
+        $topPrefs = Prefecture::where('is_representative', 1)->get();
+        // いいね取得
+        $prefectureIds = [];
+        foreach($topPrefs as $prefecture){
+            $prefectureIds[] = $prefecture->id;
+        }
+        $likes = Like::whereIn('prefecture_id', $prefectureIds)->get();
+        if(!is_null($topPrefs)){
             $forecasts = [];
-            foreach($topAreas as $area){
+            foreach($topPrefs as $prefecture){
+                // いいねフィルター
+                $filteredLikes = $likes->filter(function (Like $like) use ($prefecture) {
+                    return $like->prefecture_id === $prefecture->id;
+                });
+                // いいねカウント
+                $likeCount = $filteredLikes->count();
+                // ログインユーザーいいね判別
+                $authUser = Auth::user();
+                if(!is_null($authUser)){
+                    $authLiked = $this->checkUserLiked($filteredLikes, $authUser);
+                }else{
+                    $authLiked = false;
+                }
                 // キャッシュキー定義
-                $cache_key = "forecast_{$area->id}";
+                $cache_key = "forecast_{$prefecture->id}";
                 // キャッシュ不在ならAPI取得・キャッシュ保存(有効期限を1時間(60分×60秒))
-                $data = Cache::remember($cache_key, 60 * 60, function () use ($area) {
+                $data = Cache::remember($cache_key, 60 * 60, function () use ($prefecture) {
                     $response = Http::get('https://api.openweathermap.org/data/2.5/weather', [
-                        'lat' => $area->latitude,
-                        'lon' => $area->longitude,
+                        'lat' => $prefecture->latitude,
+                        'lon' => $prefecture->longitude,
                         'lang' => 'ja',
                         'appid' => config('services.open_weather.api_key'),
                     ]);
@@ -54,11 +76,13 @@ class ForecastController extends Controller
                 ];
                 $description = $data['weather'][0]['description'];
                 $weather = $weatherMapping[$description] ?? $description;
-                $forecasts[$area->name] = [
-                    'id' => $area->id,
+                $forecasts[$prefecture->name] = [
+                    'id' => $prefecture->id,
                     'time' => $datetime,
                     'temp' => $temp,
                     'weather' => $weather,
+                    'likeCount' => $likeCount,
+                    'authLiked' => $authLiked,
                 ];
             }
         }else{
@@ -71,18 +95,18 @@ class ForecastController extends Controller
      * 選択した都道府県の３時間ごとの天気を表示
      * @return view
      */
-    public function show(string $prefectureId)
+    public function show(string $prefectureId): view
     {
         // トップ表示都市を取得
-        $area = Prefecture::where('id', $prefectureId)->first();
-        $count = Like::where('prefecture_id', $area->id)->count();
+        $prefecture = Prefecture::where('id', $prefectureId)->first();
+        $count = Like::where('prefecture_id', $prefecture->id)->count();
         // キャッシュキー定義
-        $cache_key = "detail_{$area->id}";
+        $cache_key = "detail_{$prefecture->id}";
         // キャッシュ不在ならAPI取得・キャッシュ保存(有効期限を1時間(60分×60秒))
-        $wholeData = Cache::remember($cache_key, 60 * 60, function () use ($area) {
+        $wholeData = Cache::remember($cache_key, 60 * 60, function () use ($prefecture) {
             $response = Http::get('https://api.openweathermap.org/data/2.5/forecast', [
-                'lat' => $area->latitude,
-                'lon' => $area->longitude,
+                'lat' => $prefecture->latitude,
+                'lon' => $prefecture->longitude,
                 'lang' => 'ja',
                 'appid' => config('services.open_weather.api_key'),
             ]);
@@ -119,6 +143,14 @@ class ForecastController extends Controller
                 'weather' => $weather,
             ];
         }
-        return view('Forecasts/show', ['forecasts' => $forecasts, 'area' => $area, 'count' => $count]);
+        return view('Forecasts/show', ['forecasts' => $forecasts, 'prefecture' => $prefecture, 'count' => $count]);
+    }
+
+    private function checkUserLiked(Collection $likes, User $user): bool
+    {
+        $userId = $user->id;
+        return $likes->contains(function (Like $like) use ($userId) {
+            return $like->user_id === $userId;
+        });
     }
 }

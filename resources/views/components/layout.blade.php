@@ -54,11 +54,11 @@
         <main class="px-4 mt-3">
             <div class="title__wrapper">
                 <div class="title__container">
-                    <h2 class="smooth">{{ $h2 ?? 'WeatherApp' }}</h2>
-                    <i class="smooth text-right"> {{Carbon\Carbon::now()->isoFormat('M月DD日 H:mm') }}時点</i>
+                    <h2 class="title__main smooth">{{ $h2 ?? 'WeatherApp' }}</h2>
+                    <i class="title__time smooth"> {{Carbon\Carbon::now()->isoFormat('M月DD日 H:mm') }}時点</i>
                 </div>
                 <!-- <i class="d-block">都市名・予報・平均気温</i> -->
-                <div>
+                <div class="auth__container">
                     @if(Auth::check())
                         <div class="text-right">
                             <span class="d-block">
@@ -67,7 +67,7 @@
                             </span>
                             <form class="form-inline my-2 my-lg-0 d-block" method="POST" action="{{ route('logout') }}">
                                 @csrf
-                                <x-dropdown-link :href="route('logout')" onclick="event.preventDefault();
+                                <x-dropdown-link class="logout" :href="route('logout')" onclick="event.preventDefault();
                                                         this.closest('form').submit();">
                                     {{ __('ログアウト') }}
                                 </x-dropdown-link>

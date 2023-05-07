@@ -3,6 +3,9 @@
 a:hover {
     text-decoration: none;
 }
+.logout {
+    padding: 0!important;
+}
 .like-btn:hover {
     cursor: pointer;
     -webkit-transform: translateY(-1.5px);
@@ -21,27 +24,50 @@ a:hover {
 .forecast__icon {
     width: 50px;
 }
-.forecast__wrapper:hover {
+.top__forecast_wrapper:hover {
     background-color: #ecf5ff;
     cursor: pointer;
 }
-.title__wrapper_flex {
+.forcast {
     display: flex;
-    justify-content: space-between;
+    align-items: center;
+}
+.forecasts__detail_pd {
+    padding-left: 80px;
+}
+.title__wrapper {
+    display: flex;
     align-items: center;
 }
 .title__container {
-    width: 100%;
+    width: 80%;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+}
+.title__main {
+    width: 70%;
+}
+.title__time {
+    display: inline-block;
+    width: 30%;
+    text-align: left;
+}
+.auth__container {
+    width: 20%;
 }
 /* デスクトップサイズ (1024px以上) */
 @media screen and (min-width: 1024px) {
-    .title__wrapper {
-        max-width: 50%;
-    }
     .forecasts__wrapper{
+        max-width: 60%;
+    }
+    .top__forecast_wrapper {
+        padding-left: 50px;
+        width: 90%;
+    }
+    .top__heart_wrapper {
+        width: 10%;
+    }
+    .title__wrapper {
         max-width: 50%;
     }
     .forecast__time {
@@ -67,10 +93,16 @@ a:hover {
 }
 /* タブレットサイズ (600px 〜 1023px) */
 @media screen and (max-width: 1023px) and (min-width: 600px) {
-    .title__wrapper {
+    .forecasts__wrapper{
         max-width: 80%;
     }
-    .forecasts__wrapper{
+    .top__forecast_wrapper {
+        width: 80%;
+    }
+    .top__heart_wrapper {
+        width: 20%;
+    }
+    .title__wrapper {
         max-width: 80%;
     }
     .forecast__time {
@@ -96,11 +128,17 @@ a:hover {
 }
 /* スマートフォンサイズ (599px以下) */
 @media screen and (max-width: 599px) {
-    .title__wrapper {
-        max-width: 100%;
-    }
     .forecasts__wrapper{
         max-width: 100%;;
+    }
+    .top__forecast_wrapper {
+        width: 80%;
+    }
+    .top__heart_wrapper {
+        width: 20%;
+    }
+    .title__wrapper {
+        max-width: 100%;
     }
     .forecast__time {
         display: inline-block;
