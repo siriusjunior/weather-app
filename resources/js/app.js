@@ -46,10 +46,10 @@ const searchInput = document.getElementById('search-input');
 const suggestionsList = document.getElementById('suggestions-list');
 
 searchForm.addEventListener('input', async (e) => {
-    const query = searchInput.value;
-    if(query.length > 0){
+    const trimQuery = searchInput.value.trim();// 前後の空白を削除
+    if(trimQuery.length > 0){
         try {
-            const response = await axios.get(`/api/search?query=${query}`);
+            const response = await axios.get(`/api/search?query=${trimQuery}`);
             if (response.status === 200) {
                 const results = response.data;
                 // サジェスト結果を表示する処理を実装してください
@@ -72,3 +72,8 @@ searchForm.addEventListener('input', async (e) => {
         suggestionsList.style.display = 'none';
     }
 });
+searchInput.addEventListener('blur', async (event) => {
+    if(searchInput.value.length < 1){
+        suggestionsList.style.display = 'none';
+    }
+})
