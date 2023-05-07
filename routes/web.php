@@ -39,8 +39,7 @@ Route::get('/dashboard', function () {
 Route::middleware('auth')->group(function () {
     // 認証ユーザーのいいねボタン切替え
     Route::post('/likes/{prefectureId}', [LikeController::class, 'toggle'])->block($lockSeconds = 5, $waitSeconds = 5);;
+    Route::get('/users/{userId}/likes', [LikeController::class, 'index'])->name('likes.index')->block($lockSeconds = 5, $waitSeconds = 5);
 });
-
-
 
 require __DIR__.'/auth.php';

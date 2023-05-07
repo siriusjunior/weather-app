@@ -51,18 +51,28 @@
             </ul>
         </div>
         @endif
+        @php
+            $authUser = Auth::user();
+        @endphp
         <main class="px-4 mt-3">
             <div class="title__wrapper">
                 <div class="title__container">
                     <h2 class="title__main smooth">{{ $h2 ?? 'WeatherApp' }}</h2>
-                    <i class="title__time smooth"> {{Carbon\Carbon::now()->isoFormat('M月DD日 H:mm') }}時点</i>
+                    <div class="title__time">
+                        <i class="text-left d-block smooth"> {{Carbon\Carbon::now()->isoFormat('M月DD日 H:mm') }}時点</i>
+                        @if(!is_null($authUser) && !request()->routeIs('likes.index',['userId' => $authUser->id]) )
+                            <a href="{{ route('likes.index', ['userId' => $authUser->id] )}}" class="text-left d-block">いいねした地域</a>
+                        @else
+                            <a href="{{ route('home.index') }}" class="text-left d-block">全国のいまの天気</a>
+                        @endif
+                    </div>
                 </div>
                 <!-- <i class="d-block">都市名・予報・平均気温</i> -->
                 <div class="auth__container">
-                    @if(Auth::check())
+                    @if(!is_null($authUser))
                         <div class="text-right">
                             <span class="d-block">
-                                <a href="">{{ Auth::user()->name }}</a>
+                                <a href="">{{ $authUser->name }}</a>
                                 さん
                             </span>
                             <form class="form-inline my-2 my-lg-0 d-block" method="POST" action="{{ route('logout') }}">

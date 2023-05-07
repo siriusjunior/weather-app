@@ -143,7 +143,7 @@ class ForecastController extends Controller
                 'weather' => $weather,
             ];
         }
-        return view('Forecasts/show', ['forecasts' => $forecasts, 'prefecture' => $prefecture, 'count' => $count]);
+        return view('Forecast/show', ['forecasts' => $forecasts, 'prefecture' => $prefecture, 'count' => $count]);
     }
 
     private function checkUserLiked(Collection $likes, User $user): bool
