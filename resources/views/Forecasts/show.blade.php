@@ -1,5 +1,4 @@
 <x-layout title="{{ $prefecture->name }}の3時間ごとの天気" h2="{{ $prefecture->name }}の3時間ごとの天気">
-<hr class="my-0 mb-4" size="10" color="orange">
 @if(!empty($forecasts))
     <div class="forecasts__wrapper forecasts__detail forecasts__detail_pd">
         <span class="heart-wrapper" data-prefecture-id="{{ $prefecture->id }}">

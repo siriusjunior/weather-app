@@ -67,7 +67,7 @@
                         @endif
                     </div>
                 </div>
-                <!-- <i class="d-block">都市名・予報・平均気温</i> -->
+                <!-- ./title__container -->
                 <div class="auth__container">
                     @if(!is_null($authUser))
                         <div class="text-right">
@@ -95,8 +95,17 @@
                         </div>
                     @endif
                 </div>
+                <!-- ./auth__container -->
             </div>
             <!-- ./title__wrapper -->
+            <hr class="my-0 mb-4" size="10" color="orange">
+            <div class="mb-5">
+                <form class="search-wrapper" action="{{ route('search') }}" method="get" id="search">
+                    <input id="search-input" class="search__input mr-1 py-1" type="text" name="hurigana" placeholder="都道府県名を入力">
+                    <ul id="suggestions-list" class="suggestions-list"></ul>
+                    <button class="search__btn btn btn-primary" type="submit">検索</button>
+                </form>
+            </div>
             {{ $slot }}
         </main>
     </div>

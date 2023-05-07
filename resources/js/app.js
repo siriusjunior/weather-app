@@ -38,3 +38,37 @@ async function toggle(e) {
 document.querySelectorAll('.heart-wrapper').forEach(wrapper => {
     wrapper.addEventListener('click', debouncedToggle);
 });
+
+
+// サジェスト
+const searchForm = document.getElementById('search');
+const searchInput = document.getElementById('search-input');
+const suggestionsList = document.getElementById('suggestions-list');
+
+searchForm.addEventListener('input', async (e) => {
+    const query = searchInput.value;
+    if(query.length > 0){
+        try {
+            const response = await axios.get(`/api/search?query=${query}`);
+            if (response.status === 200) {
+                const results = response.data;
+                // サジェスト結果を表示する処理を実装してください
+                suggestionsList.innerHTML = '';
+                suggestionsList.style.display = 'block';
+                results.forEach(result => {
+                    const list = document.createElement('li');
+                    list.textContent = result.name;
+                    list.addEventListener('click', ()=>{
+                        searchInput.value = result.name;
+                        suggestionsList.style.display = 'none';
+                    })
+                    suggestionsList.appendChild(list);
+                })
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }else {
+        suggestionsList.style.display = 'none';
+    }
+});

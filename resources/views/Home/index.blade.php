@@ -1,5 +1,4 @@
 <x-layout title="TOP | 全国の天気" h2="全国の天気">
-    <hr class="my-0 mb-4" size="10" color="orange">
     @if(!empty($forecasts))
         <div class="forecasts__wrapper">
             @foreach($forecasts as $name => $forecast)
