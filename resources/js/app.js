@@ -38,3 +38,44 @@ async function toggle(e) {
 document.querySelectorAll('.heart-wrapper').forEach(wrapper => {
     wrapper.addEventListener('click', debouncedToggle);
 });
+
+
+// サジェスト
+const searchForm = document.getElementById('search');
+const searchInput = document.getElementById('search-input');
+const suggestionsList = document.getElementById('suggestions-list');
+
+searchForm.addEventListener('input', async (e) => {
+    const trimQuery = searchInput.value.trim();// 前後の空白を削除
+    if(trimQuery.length > 0){
+        try {
+            const response = await axios.get(`/api/search?query=${trimQuery}`);
+            if (response.status === 200) {
+                const results = response.data;
+                // サジェスト結果を表示する処理を実装してください
+                suggestionsList.innerHTML = '';
+                suggestionsList.style.display = 'block';
+                results.forEach(result => {
+                    const list = document.createElement('li');
+                    list.textContent = result.name;
+                    list.setAttribute('data-id', result.id);
+                    list.addEventListener('click', ()=>{
+                        searchInput.value = result.name;
+                        searchForm.action = `${window.location.origin}/forecasts/${result.id}`;
+                        suggestionsList.style.display = 'none';
+                    })
+                    suggestionsList.appendChild(list);
+                })
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }else {
+        suggestionsList.style.display = 'none';
+    }
+});
+searchInput.addEventListener('blur', async (event) => {
+    if(searchInput.value.length < 1){
+        suggestionsList.style.display = 'none';
+    }
+})

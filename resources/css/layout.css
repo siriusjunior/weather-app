@@ -1,5 +1,35 @@
 @charset "utf-8";
 
+/* サジェストレイアウト */
+.search-wrapper {
+  }
+
+  #search-input {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+  }
+
+  .suggestions-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    width: 20%;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: none;
+  }
+
+  .suggestions-list li {
+    padding: 8px;
+    border-bottom: 1px solid #eee;
+  }
+
+  .suggestions-list li:hover {
+    background-color: #f0f0f0;
+    cursor: pointer;
+  }
 a:hover {
     text-decoration: none;
 }
@@ -28,7 +58,7 @@ a:hover {
     background-color: #ecf5ff;
     cursor: pointer;
 }
-.forcast {
+.forecast {
     display: flex;
     align-items: center;
 }
@@ -55,6 +85,14 @@ a:hover {
 .auth__container {
     width: 20%;
 }
+.search__input {
+    vertical-align: bottom;
+    border: #b6b6b6 1px solid;
+    border-radius: 5px;
+}
+.search__btn {
+    padding: 4px 10px;
+}
 /* デスクトップサイズ (1024px以上) */
 @media screen and (min-width: 1024px) {
     .forecasts__wrapper{
@@ -68,7 +106,7 @@ a:hover {
         width: 10%;
     }
     .title__wrapper {
-        max-width: 50%;
+        max-width: 65%;
     }
     .forecast__time {
         display: inline-block;

@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\ForecastController;
 use App\Http\Controllers\LikeController;
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
