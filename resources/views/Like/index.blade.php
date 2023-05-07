@@ -1,4 +1,4 @@
-<x-layout title="TOP | 全国の天気" h2="全国の天気">
+<x-layout title="TOP | いいね地域の天気" h2="いいね地域の天気">
     <hr class="my-0 mb-4" size="10" color="orange">
     @if(!empty($forecasts))
         <div class="forecasts__wrapper">
@@ -6,13 +6,7 @@
                 <div class="pl-5 forcast top">
                     <div class="top__heart_wrapper">
                         <span class="heart-wrapper" data-prefecture-id="{{ $forecast['id'] }}">
-                            @if(Auth::check() && $forecast['authLiked'])
-                                <i class="like-btn fa-lg fa-heart fa-solid" style="color: #f91880;"></i>
-                            @elseif(Auth::check() && !$forecast['authLiked'])
-                                <i class="like-btn fa-lg fa-heart fa-regular" style="color: #f91880;"></i>
-                            @else
-                                <i class="fa-lg fa-heart fa-regular" style="color: #f91880;"></i>
-                            @endif
+                            <i class="like-btn fa-lg fa-heart fa-solid" style="color: #f91880;"></i>
                         </span>
                         <span class="count" data-id="{{ $forecast['id'] }}" style="color: #f91880;">{{ $forecast['likeCount'] }}</span>
                     </div>
@@ -49,7 +43,9 @@
             @endforeach
         </div>
     @else
-        <i>※天気予報を取得できません</i>
+        <div class="smooth pl-4">
+            <i>※登録されたいいね地域はありません。</i>
+        </div>
         <hr>
     @endif
 </x-layout>
