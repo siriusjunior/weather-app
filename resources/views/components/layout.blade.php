@@ -100,8 +100,8 @@
             <!-- ./title__wrapper -->
             <hr class="my-0 mb-4" size="10" color="orange">
             <div class="mb-5">
-                <form class="search-wrapper" action="{{ route('search') }}" method="get" id="search">
-                    <input id="search-input" class="search__input mr-1 py-1" type="text" name="hurigana" placeholder="都道府県名を入力">
+                <form class="search-wrapper" method="get" id="search">
+                    <input id="search-input" class="search__input mr-1 py-1" type="text" placeholder="都道府県名を入力">
                     <ul id="suggestions-list" class="suggestions-list"></ul>
                     <button class="search__btn btn btn-primary" type="submit">検索</button>
                 </form>

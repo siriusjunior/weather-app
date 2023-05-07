@@ -2,7 +2,7 @@
     @if(!empty($forecasts))
         <div class="forecasts__wrapper">
             @foreach($forecasts as $name => $forecast)
-                <div class="pl-5 forcast top">
+                <div class="pl-5 forecast top">
                     <div class="top__heart_wrapper">
                         <span class="heart-wrapper" data-prefecture-id="{{ $forecast['id'] }}">
                             @if(Auth::check() && $forecast['authLiked'])

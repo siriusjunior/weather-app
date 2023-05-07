@@ -58,8 +58,10 @@ searchForm.addEventListener('input', async (e) => {
                 results.forEach(result => {
                     const list = document.createElement('li');
                     list.textContent = result.name;
+                    list.setAttribute('data-id', result.id);
                     list.addEventListener('click', ()=>{
                         searchInput.value = result.name;
+                        searchForm.action = `${window.location.origin}/forecasts/${result.id}`;
                         suggestionsList.style.display = 'none';
                     })
                     suggestionsList.appendChild(list);

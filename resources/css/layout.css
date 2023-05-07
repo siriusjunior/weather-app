@@ -58,7 +58,7 @@ a:hover {
     background-color: #ecf5ff;
     cursor: pointer;
 }
-.forcast {
+.forecast {
     display: flex;
     align-items: center;
 }
