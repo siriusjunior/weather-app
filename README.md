@@ -20,7 +20,7 @@
 - Nginx
 - MySQL: 5.7.33
 
-###　開発環境
+### 開発環境
 
 - GitHub（Pull requests, Issues）
 - docker-compose（開発）
@@ -32,7 +32,7 @@
 - 都市名の入力で都市名の候補をリスト表示するサジェスト機能(Ajax,APIモード)
 - いいね作成・削除機能(Ajax)
 - いいね登録した都市を表示する機能
-- ログイン機能(Laravel Breeze)
+- ログイン・認証機能(Laravel Breeze)
     - ログイン画面表示
     - ログイン処理
     - ログアウト処理
@@ -75,3 +75,16 @@ $wholeData = Cache::remember($cache_key, 60 * 60, function () use ($prefecture) 
     return $response->json();
 });
 ```
+
+### 都市名の入力で都市名の候補をリスト表示するサジェスト機能
+<a href="https://gyazo.com/2d54bb3ca6011825dbb39426de44065b"><img src="https://i.gyazo.com/2d54bb3ca6011825dbb39426de44065b.gif" alt="Image from Gyazo" width="500"/></a>
+
+### いいね作成・削除機能
+<a href="https://gyazo.com/46448d7259329b3f4ad60ef2f93570f0"><img src="https://i.gyazo.com/46448d7259329b3f4ad60ef2f93570f0.gif" alt="Image from Gyazo" width="500"/></a>
+
+### いいね登録した都市を表示する機能
+<img width="500" alt="スクリーンショット 2023-05-09 22 56 09" src="https://github.com/siriusjunior/weather-app/assets/74279208/683f777b-f13f-46d4-8214-eae2b45eb8ca">
+
+<img width="500" alt="スクリーンショット 2023-05-09 22 57 17" src="https://github.com/siriusjunior/weather-app/assets/74279208/8b16a80c-3c81-4df5-9f2d-2e0131bf8cae">
+
+
