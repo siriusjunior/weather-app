@@ -46,13 +46,13 @@
         <div class="px-5 alert alert-danger" role="alert">
             <ul>
                 @foreach ($errors->all() as $error)
-                    <li><b class="alert-danger">{{ $error }}</b></li>
+                <li><b class="alert-danger">{{ $error }}</b></li>
                 @endforeach
             </ul>
         </div>
         @endif
         @php
-            $authUser = Auth::user();
+        $authUser = Auth::user();
         @endphp
         <main class="px-4 mt-3">
             <div class="title__wrapper">
@@ -61,38 +61,36 @@
                     <div class="title__time">
                         <i class="text-left d-block smooth"> {{Carbon\Carbon::now()->isoFormat('M月DD日 H:mm') }}時点</i>
                         @if(!is_null($authUser) && !request()->routeIs('likes.index',['userId' => $authUser->id]) )
-                            <a href="{{ route('likes.index', ['userId' => $authUser->id] )}}" class="text-left d-block">いいねした地域</a>
+                        <a href="{{ route('likes.index', ['userId' => $authUser->id] )}}" class="text-left d-block">いいねした地域</a>
                         @else
-                            <a href="{{ route('home.index') }}" class="text-left d-block">全国のいまの天気</a>
+                        <a href="{{ route('home.index') }}" class="text-left d-block">全国のいまの天気</a>
                         @endif
                     </div>
                 </div>
                 <!-- ./title__container -->
                 <div class="auth__container">
                     @if(!is_null($authUser))
-                        <div class="text-right">
-                            <span class="d-block">
-                                <a href="">{{ $authUser->name }}</a>
-                                さん
-                            </span>
-                            <form class="form-inline my-2 my-lg-0 d-block" method="POST" action="{{ route('logout') }}">
-                                @csrf
-                                <x-dropdown-link class="logout" :href="route('logout')" onclick="event.preventDefault();
+                    <div class="text-right">
+                        <span class="d-block">
+                            <a href="">{{ $authUser->name }}</a>
+                            さん
+                        </span>
+                        <form class="form-inline my-2 my-lg-0 d-block" method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <x-dropdown-link class="logout" :href="route('logout')" onclick="event.preventDefault();
                                                         this.closest('form').submit();">
-                                    {{ __('ログアウト') }}
-                                </x-dropdown-link>
-                            </form>
-                        </div>
+                                {{ __('ログアウト') }}
+                            </x-dropdown-link>
+                        </form>
+                    </div>
                     @else
-                        <div class="text-right">
-                            <span>
-                                <a href="{{route('login')}}">ログイン</a>
-                                するといいね登録ができます。
-                                <br>
-                                <!-- <a href="/">ゲストログイン</a>
-                                もできます。 -->
-                            </span>
-                        </div>
+                    <div class="text-right">
+                        <span>
+                            <a href="{{route('login')}}">ログイン</a>
+                            するといいね登録ができます。
+                            <br>
+                        </span>
+                    </div>
                     @endif
                 </div>
                 <!-- ./auth__container -->
@@ -100,8 +98,8 @@
             <!-- ./title__wrapper -->
             <hr class="my-0 mb-4" size="10" color="orange">
             <div class="mb-5">
-                <form class="search-wrapper" method="get" id="search">
-                    <input id="search-input" class="search__input mr-1 py-1" type="text" placeholder="都道府県名を入力">
+                <form class="search-wrapper" method="get" id="search" action="{{route('web.search')}}">
+                    <input id="search-input" name="name" class="search__input mr-1 py-1" type="text" placeholder="都道府県名を入力">
                     <ul id="suggestions-list" class="suggestions-list"></ul>
                     <button class="search__btn btn btn-primary" type="submit">検索</button>
                 </form>
@@ -114,4 +112,5 @@
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
+
 </html>
