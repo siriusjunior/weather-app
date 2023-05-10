@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ForecastController;
 use App\Http\Controllers\LikeController;
+use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,7 +30,6 @@ Route::get('/', [ForecastController::class, 'index'])
 Route::get('/forecasts/{prefectureId}', [ForecastController::class, 'show'])
     ->name('forecasts.show')
     ->block($lockSeconds = 5, $waitSeconds = 5);
-;
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -41,4 +41,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/users/{userId}/likes', [LikeController::class, 'index'])->name('likes.index')->block($lockSeconds = 5, $waitSeconds = 5);
 });
 
-require __DIR__.'/auth.php';
+//選択した都道府県の３時間ごとの天気を表示
+Route::get('/search', [SearchController::class, 'show'])
+    ->name('web.search')
+    ->block($lockSeconds = 5, $waitSeconds = 5);
+
+require __DIR__ . '/auth.php';

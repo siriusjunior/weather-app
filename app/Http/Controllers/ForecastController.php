@@ -7,6 +7,7 @@ use App\Models\Prefecture;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
@@ -24,13 +25,13 @@ class ForecastController extends Controller
         $topPrefs = Prefecture::where('is_representative', 1)->get();
         // いいね取得
         $prefectureIds = [];
-        foreach($topPrefs as $prefecture){
+        foreach ($topPrefs as $prefecture) {
             $prefectureIds[] = $prefecture->id;
         }
         $likes = Like::whereIn('prefecture_id', $prefectureIds)->get();
-        if(!is_null($topPrefs)){
+        if (!is_null($topPrefs)) {
             $forecasts = [];
-            foreach($topPrefs as $prefecture){
+            foreach ($topPrefs as $prefecture) {
                 // いいねフィルター
                 $filteredLikes = $likes->filter(function (Like $like) use ($prefecture) {
                     return $like->prefecture_id === $prefecture->id;
@@ -39,9 +40,9 @@ class ForecastController extends Controller
                 $likeCount = $filteredLikes->count();
                 // ログインユーザーいいね判別
                 $authUser = Auth::user();
-                if(!is_null($authUser)){
+                if (!is_null($authUser)) {
                     $authLiked = $this->checkUserLiked($filteredLikes, $authUser);
-                }else{
+                } else {
                     $authLiked = false;
                 }
                 // キャッシュキー定義
@@ -86,7 +87,7 @@ class ForecastController extends Controller
                     'authLiked' => $authLiked,
                 ];
             }
-        }else{
+        } else {
             $forecasts = [];
         }
         return view('Home/index', ['forecasts' => $forecasts]);
@@ -99,7 +100,7 @@ class ForecastController extends Controller
     public function show(string $prefectureId): view
     {
         // トップ表示都市を取得
-        $prefecture = Prefecture::where('id', $prefectureId)->first();
+        $prefecture = Prefecture::where('id', $prefectureId)->firstOrFail();
         $count = Like::where('prefecture_id', $prefecture->id)->count();
         // キャッシュキー定義
         $cache_key = "detail_{$prefecture->id}";
@@ -116,7 +117,7 @@ class ForecastController extends Controller
         // 要素を取得(直近24時間)
         $hoursData = array_slice($wholeData['list'], 0, 8);
         $forecasts = [];
-        foreach($hoursData as $data){
+        foreach ($hoursData as $data) {
             $datetime = Carbon::createFromTimestamp($data['dt'], 'Asia/Tokyo')->isoFormat('M月DD日 H:mm');
             //ケルビンから摂氏に変換
             $temp = round($data['main']['temp'] - 273.15, 1);

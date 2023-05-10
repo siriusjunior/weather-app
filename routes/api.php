@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 //選択した都道府県の３時間ごとの天気を表示
-Route::get('/search', [SearchController::class, 'search'])->name('search');
+Route::get('/search', [SearchController::class, 'search'])->name('api.search');
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

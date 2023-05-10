@@ -52,7 +52,6 @@ searchForm.addEventListener('input', async (e) => {
             const response = await axios.get(`/api/search?query=${trimQuery}`);
             if (response.status === 200) {
                 const results = response.data;
-                // サジェスト結果を表示する処理を実装してください
                 suggestionsList.innerHTML = '';
                 suggestionsList.style.display = 'block';
                 results.forEach(result => {
@@ -61,7 +60,6 @@ searchForm.addEventListener('input', async (e) => {
                     list.setAttribute('data-id', result.id);
                     list.addEventListener('click', ()=>{
                         searchInput.value = result.name;
-                        searchForm.action = `${window.location.origin}/forecasts/${result.id}`;
                         suggestionsList.style.display = 'none';
                     })
                     suggestionsList.appendChild(list);
